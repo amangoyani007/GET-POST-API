@@ -1,20 +1,21 @@
 const express = require('express');
-const dbconnect = require('./mongodb');
+const dbconnect = require('./index');
 const app = express();
 
 app.use(express.json());
 
-app.get('/a', async (req, resp) => {
+app.get('/', async (req, res) => {
     let data = await dbconnect();
     data = await data.find().toArray();
     console.log(data);
-    resp.send(data)
+    res.send(data);
 });
 
-app.post('/', async (req, resp) => {
+app.post('/', async (req, res)=>{
     let data = await dbconnect();
-    let result = await data.insertOne(req.body)
-    resp.send(req.body)
+    let result = await data.insertOne(req.body);
+    res.send(req.body);
+
 })
 
-app.listen(5000)
+app.listen(3000);
